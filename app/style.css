@@ -1,0 +1,175 @@
+@font-face {
+  font-family: 'Anton';
+  src: url('./fonts/Anton-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pacifico';
+  src: url('./fonts/Pacifico-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: #0d0714;
+  color: #f3eefc;
+  font: 15px/1.45 system-ui, -apple-system, sans-serif;
+}
+
+.app { display: flex; height: 100vh; }
+
+.controls {
+  width: 324px;
+  flex: 0 0 324px;
+  overflow-y: auto;
+  padding: 22px 20px 30px;
+  background: linear-gradient(180deg, #1a0f2e 0%, #12081f 100%);
+  border-right: 1px solid #352154;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.controls h1 {
+  margin: 0;
+  font-family: 'Anton', sans-serif;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(92deg, #fff3cf 10%, #ffb84d 45%, #ff4f9a 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.controls .tag { margin: 6px 0 0; color: #b9a8d9; font-size: 13.5px; }
+.controls section { display: flex; flex-direction: column; gap: 9px; }
+.controls h2 {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ff8ae2;
+}
+.controls footer { color: #7d6ba3; font-size: 12px; margin-top: auto; }
+
+label { display: flex; flex-direction: column; gap: 5px; font-weight: 600; font-size: 13.5px; }
+label.check { flex-direction: row; align-items: center; gap: 8px; font-weight: 500; }
+input[type=text] {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #452a6e;
+  border-radius: 8px;
+  background: #0d0714;
+  color: #fff;
+}
+input[type=text]:focus { outline: 2px solid #ff4f9a; outline-offset: 0; border-color: transparent; }
+input[type=range] { accent-color: #ff4f9a; width: 100%; }
+input[type=file] { display: none; }
+
+.file-label {
+  align-items: center;
+  padding: 10px;
+  border: 1.5px dashed #6b4fa3;
+  border-radius: 10px;
+  color: #ffd23e;
+  cursor: pointer;
+  text-align: center;
+}
+.file-label:hover { border-color: #ffd23e; background: rgba(255, 210, 62, 0.06); }
+
+.tray { display: flex; flex-wrap: wrap; gap: 8px; }
+.tray:empty { display: none; }
+.thumb {
+  padding: 0;
+  border: 2px solid #452a6e;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 62px;
+  height: 62px;
+  cursor: pointer;
+  background: #000;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.active { border-color: #ffd23e; }
+
+.btn-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+.pick {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid #452a6e;
+  background: #1d1136;
+  color: #d9ccf5;
+  cursor: pointer;
+}
+.pick:hover { border-color: #8f6fd0; }
+.pick.active { background: #ff4f9a; border-color: #ff4f9a; color: #fff; }
+
+button.ghost {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #452a6e;
+  background: transparent;
+  color: #d9ccf5;
+  cursor: pointer;
+}
+button.ghost:hover { border-color: #8f6fd0; }
+
+.hint { margin: 0; font-size: 12.5px; color: #9a86c4; }
+
+button.export {
+  font-family: 'Anton', sans-serif;
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 13px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(92deg, #ff7a3c, #ff4f9a);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(255, 79, 154, 0.35);
+}
+button.export:hover { filter: brightness(1.1); }
+#status { margin: 0; min-height: 1.2em; font-size: 13px; color: #ffd23e; }
+
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px;
+  background:
+    radial-gradient(1100px 500px at 70% -10%, rgba(255, 79, 154, 0.14), transparent 60%),
+    radial-gradient(900px 600px at 10% 110%, rgba(255, 122, 60, 0.12), transparent 60%),
+    #0d0714;
+}
+canvas#cover {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+  cursor: grab;
+  touch-action: none;
+}
+canvas#cover:active { cursor: grabbing; }
+
+/* Screenshot mode: the cover alone fills the viewport. */
+body.shot-cover .controls,
+body.shot-cover .stage { padding: 0; }
+body.shot-cover .controls { display: none; }
+body.shot-cover .app { display: block; height: 100vh; }
+body.shot-cover canvas#cover {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  box-shadow: none;
+  cursor: default;
+}
